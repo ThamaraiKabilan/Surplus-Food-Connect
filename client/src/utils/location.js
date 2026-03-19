@@ -51,22 +51,11 @@ const pickLocationName = (address = {}) => {
   );
 };
 
-export const reverseGeocodeLive = async (latitude, longitude) => {
-  const response = await fetch(
-    `https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${latitude}&lon=${longitude}&zoom=18&addressdetails=1`
-  );
-
-  if (!response.ok) {
-    throw new Error("Unable to fetch place name for your current location");
-  }
-
-  const data = await response.json();
-
-  return {
-    location: pickLocationName(data.address),
-    fullAddress: data.display_name || `Detected location near ${latitude.toFixed(5)}, ${longitude.toFixed(5)}`
-  };
-};
+export const reverseGeocodeLive = async (latitude, longitude) =>
+  Promise.resolve({
+    location: pickLocationName({ city: reverseGeocodeMock(latitude, longitude).location }),
+    fullAddress: reverseGeocodeMock(latitude, longitude).fullAddress
+  });
 
 export const getCurrentLocationDetails = () =>
   new Promise((resolve, reject) => {

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { 
   Home, Hotel, ShieldCheck, FileText, Camera, 
   MapPin, Navigation, RefreshCw, CheckCircle2, 
-  AlertCircle, Eye, ArrowLeft, CloudUpload, Lock,
+  AlertCircle, Eye, ArrowLeft, CloudUpload, Lock, Clock,
   ShieldAlert, Info, ChevronRight, BookmarkCheck
 } from "lucide-react";
 import Layout from "../components/Layout.jsx";
