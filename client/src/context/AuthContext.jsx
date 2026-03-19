@@ -1,19 +1,32 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const AuthContext = createContext(null);
+const STORAGE_KEY = "surplus-user";
+
+const readStoredUser = () => {
+  const stored = localStorage.getItem(STORAGE_KEY);
+
+  if (!stored) {
+    return null;
+  }
+
+  try {
+    return JSON.parse(stored);
+  } catch (error) {
+    localStorage.removeItem(STORAGE_KEY);
+    return null;
+  }
+};
 
 export const AuthProvider = ({ children }) => {
   const [loading] = useState(false);
-  const [user, setUser] = useState(() => {
-    const stored = localStorage.getItem("surplus-user");
-    return stored ? JSON.parse(stored) : null;
-  });
+  const [user, setUser] = useState(readStoredUser);
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem("surplus-user", JSON.stringify(user));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(user));
     } else {
-      localStorage.removeItem("surplus-user");
+      localStorage.removeItem(STORAGE_KEY);
     }
   }, [user]);
 

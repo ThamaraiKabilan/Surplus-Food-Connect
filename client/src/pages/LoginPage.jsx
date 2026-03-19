@@ -10,6 +10,7 @@ import { apiRequest } from "../api.js";
 import { useAuth } from "../context/AuthContext.jsx";
 
 const PROVIDER_MODE_KEY = "provider-source-settings";
+const AUTH_STORAGE_KEY = "surplus-user";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -36,6 +37,7 @@ const LoginPage = () => {
         body: JSON.stringify(formData)
       });
 
+      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(data));
       setUser(data);
       if (data.role === "provider") {
         navigate(localStorage.getItem(PROVIDER_MODE_KEY) ? "/provider" : "/provider-mode");

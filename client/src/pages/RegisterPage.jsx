@@ -9,6 +9,8 @@ import Layout from "../components/Layout.jsx";
 import { apiRequest } from "../api.js";
 import { useAuth } from "../context/AuthContext.jsx";
 
+const AUTH_STORAGE_KEY = "surplus-user";
+
 const RegisterPage = () => {
   const navigate = useNavigate();
   const { setUser } = useAuth();
@@ -37,6 +39,7 @@ const RegisterPage = () => {
         method: "POST",
         body: JSON.stringify(formData)
       });
+      localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(data));
       setUser(data);
       navigate(data.role === "provider" ? "/provider-mode" : "/ngo-profile");
     } catch (err) {
